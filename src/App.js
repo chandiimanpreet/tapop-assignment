@@ -1,25 +1,54 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import SignIn from './components/auth/SignIn';
+import SignUp from './components/auth/SignUp';
+import Home from './components/Home'
+import { Routes, Route } from 'react-router-dom';
+import Protector from './components/auth/Protector';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import Loader from './components/Loader';
+// import { auth } from './firebase-config';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [user, setUser] = useState(null);
+    const [image, setImage] = useState(null);
+    const [loader, setLoader] = useState(true);
+
+    useEffect(() => {
+        const auth = getAuth();
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log(user)
+                setUser(user);
+            }
+            else {
+                setUser(null);
+            }
+            setLoader(false);
+        })
+        return () => {
+            unsubscribe();
+        }
+    }, []);
+
+    if (loader) {
+        return (
+            <Loader />
+        )
+    } else {
+        return (
+            <div className="App">
+                <Routes>
+                    <Route element={<Protector user={user} />}>
+                        <Route path='/' element={<Home user={user} setUser={setUser} image={image} setImage={setImage} setLoader={setLoader} />} />
+                    </Route>
+                    <Route path='/signIn' element={<SignIn user={user} setUser={setUser} setImage={setImage} />} />
+                    <Route path='/signUp' element={<SignUp user={user} setUser={setUser} />} />
+                </Routes>
+            </div>
+        );
+    }
 }
 
 export default App;

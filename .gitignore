@@ -21,3 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+<input name='idProof' onChange={(e) => { fileDataHandler(e); }}
+                        accept="image/*" style={{ display: 'none' }} id="raised-button-file" type="file"
+                    />
+                    <label htmlFor="raised-button-file">
+                        <Button variant="contained" component="span" sx={{ mt: 3, mb: 2, mr: 3, ml: 3 }}>Select Image</Button>
+                    </label>
