@@ -82,3 +82,5 @@ const Home = ({ user, setUser, image, setImage, setLoader }) => {
 }
 
 export default Home
+
+//dfgfdg
