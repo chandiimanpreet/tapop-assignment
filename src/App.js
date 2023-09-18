@@ -7,19 +7,19 @@ import { Routes, Route } from 'react-router-dom';
 import Protector from './components/auth/Protector';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import Loader from './components/Loader';
-// import { auth } from './firebase-config';
 
 function App() {
 
+    // States
     const [user, setUser] = useState(null);
     const [image, setImage] = useState(null);
     const [loader, setLoader] = useState(true);
 
+    // Handlers
     useEffect(() => {
         const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                console.log(user)
                 setUser(user);
             }
             else {
@@ -41,7 +41,7 @@ function App() {
             <div className="App">
                 <Routes>
                     <Route element={<Protector user={user} />}>
-                        <Route path='/' element={<Home user={user} setUser={setUser} image={image} setImage={setImage} setLoader={setLoader} />} />
+                        <Route path='/' element={<Home user={user} setUser={setUser} image={image} setImage={setImage}  />} />
                     </Route>
                     <Route path='/signIn' element={<SignIn user={user} setUser={setUser} setImage={setImage} />} />
                     <Route path='/signUp' element={<SignUp user={user} setUser={setUser} />} />

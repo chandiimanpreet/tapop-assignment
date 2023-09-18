@@ -9,7 +9,7 @@ const imageElementSelector = () => {
     } else {
         img = img2;
     }
-}
+};
 
 const tiltEffectSettings = {
     max: 25, // max tilt rotation 
@@ -61,10 +61,3 @@ const setTransition = () => {
 };
 
 export const imgMouseEnter = () => { setTransition(); };
-
-if (img) {
-    img.addEventListener('mousemove', imgMouseMove);
-    img.addEventListener('mouseleave', imgMouseLeave);
-    img.addEventListener('mouseenter', imgMouseEnter);
-}
-

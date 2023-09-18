@@ -6,26 +6,21 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { auth } from '../firebase-config';
 import {  signOut } from 'firebase/auth';
-import { Navigate } from 'react-router-dom';
 
-const Navbar = ({user, setUser, setLoader}) => {
+const Navbar = ({user, setUser}) => {
 
+    // States
     const [isLoggedOut, setIsLoggedOut] = useState(false);
-    console.log(user)
 
+    // Handlers
     const userSignOut = () => {
         signOut(auth).then(() => {
             setUser(null);
             console.log('Signed Out');
-            setLoader(false);
         }).catch((err) => console.log(err));
         
         setIsLoggedOut(true);
-    }
-
-    if (!user) {
-        return <Navigate to='/signIn' />
-    }
+    };
 
     return (
         <Box sx={{ flexGrow: 1 }}>
